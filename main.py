@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
-img = cv2.imread("images/sample1.jpg", cv2.IMREAD_GRAYSCALE)
+img = cv2.imread("dog2.png", cv2.IMREAD_GRAYSCALE)
 
 mode = "equalization"  # "normalization", "negative", "binarization"
 threshold = 128
@@ -71,12 +71,13 @@ for pixel in map.flatten():
 fig, ax = plt.subplots(3, 2)
 
 ax[0][0].imshow(img, cmap='gray', vmin=0, vmax=255)
-ax[1][0].hist(img.flatten(), bins=256, range=[0,256], alpha=0.3, label='Histogram')
+#ax[1][0].hist(img.flatten(), bins=256, range=[0,256], alpha=0.3, label='Histogram')
+ax[1][0].bar(x, H1, width=3.0)
 ax[2][0].bar(x, H2_norm, width=3.0)
 
 ax[0][1].imshow(map, cmap='gray', vmin=0, vmax=255)
 ax[1][1].plot(x, H3, label='Ideal')
-ax[2][1].hist(map.flatten(), bins=256, range=[0,256], alpha=0.3, label='Histogram')
-#ax[2][1].bar(x, H5, width=3.0)
+#ax[1][1].hist(map.flatten(), bins=256, range=[0,256], alpha=0.3, label='Histogram')
+ax[2][1].bar(x, H5, width=3.0)
 
 plt.show()
