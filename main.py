@@ -2,15 +2,16 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
-img = cv2.imread("dog2.png", cv2.IMREAD_GRAYSCALE)
+img = cv2.imread("images/sample4.jpg", cv2.IMREAD_GRAYSCALE)
 
-mode = "equalization"  # "normalization", "negative", "binarization"
+mode = "equalization" #equalization", "normalization", "negative", "binarization"
 threshold = 128
 
 if mode == "equalization":
     K1, K2, L1, L2 = 0, 1, 0, 255
 elif mode == "normalization":
     K1, K2 = 0, 1
+    img = (img * 0.5 + 50).astype(np.uint8) #Optional image constraint, just for testing
     L1, L2 = int(img.min()), int(img.max())
 elif mode == "negative":
     K1, K2 = 1, 0
@@ -68,16 +69,25 @@ for pixel in map.flatten():
     H5[pixel] += 1
 
 # Plotting
-fig, ax = plt.subplots(3, 2)
+fig, ax = plt.subplots(2, 2)
 
 ax[0][0].imshow(img, cmap='gray', vmin=0, vmax=255)
-#ax[1][0].hist(img.flatten(), bins=256, range=[0,256], alpha=0.3, label='Histogram')
-ax[1][0].bar(x, H1, width=3.0)
-ax[2][0].bar(x, H2_norm, width=3.0)
+ax[0][0].set_title("Original")
+ax[0][0].axis('off')
+ax[1][0].imshow(map, cmap='gray', vmin=0, vmax=255)
+ax[1][0].set_title("Realçada")
+ax[1][0].axis('off')
+ax[0][1].bar(x, H1, width=3.0)
+ax[0][1].tick_params(labelsize=7)
+ax[1][1].bar(x, H5, width=3.0)
+ax[1][1].tick_params(labelsize=7)
 
-ax[0][1].imshow(map, cmap='gray', vmin=0, vmax=255)
-ax[1][1].plot(x, H3, label='Ideal')
-#ax[1][1].hist(map.flatten(), bins=256, range=[0,256], alpha=0.3, label='Histogram')
-ax[2][1].bar(x, H5, width=3.0)
+#ax[0][0].imshow(img, cmap='gray', vmin=0, vmax=255)
+#ax[1][0].bar(x, H1, width=3.0)
+#ax[2][0].bar(x, H2_norm, width=3.0)
+
+#ax[0][1].imshow(map, cmap='gray', vmin=0, vmax=255)
+#ax[1][1].plot(x, H3, label='Ideal')
+#ax[2][1].bar(x, H5, width=3.0)
 
 plt.show()
