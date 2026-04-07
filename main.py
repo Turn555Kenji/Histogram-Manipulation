@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
-img = cv2.imread("images/sample4.jpg", cv2.IMREAD_GRAYSCALE)
+img = cv2.imread("images/sample1.jpg", cv2.IMREAD_GRAYSCALE)
 
 mode = "equalization" #equalization", "normalization", "negative", "binarization"
 threshold = 128
@@ -11,7 +11,7 @@ if mode == "equalization":
     K1, K2, L1, L2 = 0, 1, 0, 255
 elif mode == "normalization":
     K1, K2 = 0, 1
-    img = (img * 0.5 + 50).astype(np.uint8) #Optional image constraint, just for testing
+    #img = (img * 0.5 + 50).astype(np.uint8) #Optional image constraint, just for testing
     L1, L2 = int(img.min()), int(img.max())
 elif mode == "negative":
     K1, K2 = 1, 0
